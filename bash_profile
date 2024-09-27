@@ -1,15 +1,22 @@
-export PATH=$PATH:~/android-sdks/platform-tools:~/android-sdks/tools:/Users/alexdavis/work/arcanist/bin
+alias addpath='echo "export PATH=\$PATH:$1" >> ~/.bash_'
 
+
+history -a
 function parse_git_branch {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
   echo ${ref#refs/heads/}
-}
+export HISTSIZE=5000
+export HISTFILESIZE=5000
+history -a
 
 RED="\[\033[0;31m\]"
 YELLOW="\[\033[0;33m\]"
 GREEN="\[\033[0;32m\]"
 
 PS1="$RED\$(date +%H:%M) \w$YELLOW (\$(parse_git_branch))$GREEN\$ "
+
+alias gg='git commit -am 'gg''
+alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin'
 
 alias st='git status'
 alias ..='cd ..'
@@ -20,7 +27,8 @@ alias ontop='git commit -a --amend -C HEAD'
 alias base='git fetch origin && git rebase origin/master'
 alias ibase='git fetch origin && git rebase -i origin/master'
 alias req='git push origin :`parse_git_branch`; git push origin HEAD && ./scripts/pr_link'
-alias put='git push origin HEAD:master && git push origin :`parse_git_branch`'
+#old alias put='git push origin HEAD:master && git push origin :`parse_git_branch`'
+alias put='git push origin HEAD:master && git push origin:`parse_git_branch`'
 alias astop='adb shell am force-stop com.airbnb.android'
 alias solve='git add --all && git rebase --continue'
 alias mkbranch='~/mbr.sh'
